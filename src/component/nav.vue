@@ -20,8 +20,7 @@
               </RouterLink>
               <RouterLink to="/jobs/add"
                 :class="[isActiveLink('/jobs/add') ? 'bg-green-900' : 'hover:bg-gray-900 hover:text-white', 'text-white', 'px-3', 'py-2', 'rounded-md']">
-                Add
-                Job</RouterLink>
+                Add Job</RouterLink>
             </div>
           </div>
         </div>
