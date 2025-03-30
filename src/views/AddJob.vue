@@ -2,7 +2,7 @@
     <section class="bg-green-50">
         <div class="container m-auto max-w-2xl py-24">
             <div class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-                <form @submit.prevent="hendelSubmit">
+                <form @submit.prevent="handleSubmit">
                     <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2>
 
                     <div class="mb-4">
@@ -99,6 +99,7 @@
 <script setup>
 import router from '@/router';
 import { reactive } from 'vue';
+import { useToast } from 'vue-toastification';
 import axios from 'axios';
 
 const form = reactive({
@@ -112,10 +113,13 @@ const form = reactive({
         description: "",
         contactEmail: "",
         contactPhone: "",
-    }
+    },
 });
 
-const hendelSubmit = async () => {
+const toast = useToast();
+
+const handleSubmit = async (event) => {
+
     const newJob = {
         title: form.title,
         type: form.type,
@@ -126,18 +130,17 @@ const hendelSubmit = async () => {
             name: form.company.name,
             description: form.company.description,
             contactEmail: form.company.contactEmail,
-            contactPhone: form.company.contactPhone
-        }
-    }
+            contactPhone: form.company.contactPhone,
+        },
+    };
 
     try {
-        const response = await axios.post('/api/jobs', newJob);
-        // @todo = Show Toast
+        const response = await axios.post("/api/jobs", newJob);
+        toast.success("Job Added Successfully!");
         router.push(`/jobs/${response.data.id}`);
     } catch (error) {
-        // @todo = Show Toast
+        toast.error("Job Was Not Added");
         console.error(error);
     }
-
-}
+};
 </script>
